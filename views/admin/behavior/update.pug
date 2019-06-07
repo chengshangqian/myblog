@@ -1,0 +1,37 @@
+extends ../layout
+block content
+  include ../operation-status.pug
+    
+  include ../menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+    form(id='updateForm' method='POST' class='needs-validation' style='margin:10px 0 10px 0;' novalidate)
+      input(type='hidden' name='id' value=behavior._id)
+      input(type='hidden' id='article' name='article' value= behavior.article ? behavior.article._id : '')
+      div.form-row
+        div(class='col-md-6 mb-3')
+          label(for='code') 行为编码
+          input(type='text' class='form-control' id='code' name='code' value=behavior.code placeholder='请输入行为编码'  required)
+          .invalid-feedback 请输入行为编码
+      div.form-row
+        div(class='col-md-6 mb-3')
+          label(for='target') 行为现场
+          input(type='target' class='form-control' id='target' name='target' value=behavior.target placeholder='请输入行为现场'  required)
+          .invalid-feedback 请输入行为现场       
+      div.form-row
+        div(class='col-md-6 mb-3')
+          label(for='articleEl') 关联文章
+          input(type='text' id='articleEl' class='form-control' name='articleName' aria-describedby='articleElHelp' placeholder='输入文章关键字查询'  required)
+          <small id='articleElHelp' class='form-text text-info'>输入文章关键字，如标题，摘要，文章内容包含文字等</small>
+          .invalid-feedback 请选择查询到的文章
+      if(behavior._id)
+        button(type='submit' class='btn btn-primary') 更新
+      else
+        button(type='submit' class='btn btn-primary') 添加
+      a(href='/admin/behaviors' class='btn btn-secondary' style='margin-left:10px;') 返回
+
+block script
+  include ../scripts
+  script(src='/components/jquery-ui/jquery-ui.js')
+  script(src='/admin/javascripts/common-update.js')
+  script(src='/admin/javascripts/behavior/update.js')
+  

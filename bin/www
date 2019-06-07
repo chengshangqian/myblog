@@ -25,7 +25,8 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+//server.listen(port);//此种方式接受IPV6的连接请求，IPV4的请求调用req.ip获取客户端IP地址时，IPV4地址会默认映射为IPV6地址后返回
+server.listen(port,'0.0.0.0');//IPV4请求
 server.on('error', onError);
 server.on('listening', onListening);
 

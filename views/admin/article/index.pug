@@ -1,0 +1,68 @@
+extends ../layout
+block content
+  //删除操作提示
+  include ../operation-comfirm.pug
+  include ../operation-status.pug
+    
+  //顶部导航
+  include ../menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+    a(id='createBtn' href='/admin/articles/update' class='btn btn-primary' role='button' style='margin:10px 0 10px 0;') 添加文章
+    -if(articles && articles.length)
+      .table-responsive
+        table.table.table-striped.table-sm
+          thead
+            tr    
+              th 序号
+              th 标题        
+              th 发布
+              th 点赞
+              th 分享
+              th 阅读
+              th 最后更新
+              th 创建时间
+              th 操作
+          tbody
+            each article,index in articles
+             tr
+               th #{index + 1}      
+               td
+                 a(href='/article/'+article._id target='_blank')= article.title
+               td= true === article.published ? '已发布' : '草稿' 
+               td= article.liked 
+               td= article.shared 
+               td= article.read 
+               td= article.lastModifyTime
+               td= article.createTime
+               td
+                 a(href='/admin/articles/update?id='+article._id class='btn-sm') 更新
+                 a(href='#confirmModal' data-url='/api/articles/'+article._id class='btn-sm' data-toggle='modal' data-name=article.title data-id=article._id) 删除
+      nav
+        ul.pagination.justify-content-center
+          -if(pagination.page <= 1)
+           li.page-item.disabled
+             a(class='page-link' href='#' tabindex='-1' aria-disabled='true') 上一页
+          -else
+            li.page-item
+              a(class='page-link' href='/admin/articles?limit=' + pagination.limit + '&page=' + (pagination.page - 1) + (keywds ? '&keywds=' + keywds : '' )) 上一页       
+          -if(pagination)
+            -for(var i = 1; i <= pagination.pages; i++)
+              -if(i == pagination.page)
+                li(class='page-item active' aria-current='page')
+                  a(class='page-link' href='#') #{i}
+                    span(class='sr-only') (current)
+              -else
+                li.page-item
+                  a(class='page-link' href='/admin/articles?limit=' + pagination.limit + '&page=' + i + (keywds ? '&keywds=' + keywds : '' )) #{i}
+          -if(pagination.page < pagination.pages)
+            li.page-item
+              a(class='page-link' href='/admin/articles?limit=' + pagination.limit + '&page=' + (pagination.page + 1) + (keywds ? '&keywds=' + keywds : '' )) 下一页
+          -else
+            li.page-item.disabled
+              a(class='page-link' href='#' tabindex='-1' aria-disabled='true') 下一页
+    -else
+      p 暂无数据        
+    
+block script
+  include ../scripts
+    script(src='/admin/javascripts/common-index.js')

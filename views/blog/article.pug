@@ -1,0 +1,56 @@
+extends layout.pug
+  
+block content
+  include operation-status.pug    
+  .col-md-8.blog-main
+    if article
+      div(class='blog-post')
+        h1(class='blog-post-title')= article.title
+        p(class='blog-post-meta') 发表：#{article.createTime.substr(0,10)} 更新：#{article.lastModifyTime.substr(0,10)} 阅读：#[span(id='read')= article.read] 作者：#[a(href='/') 成尚谦] 
+        #content= article.content
+        div.d-flex.justify-content-center
+          div.form-row.col-md-6.mb-3.justify-content-around
+            a(href='#' id='liked' class='btn btn-success') 喜欢 ( #{article.liked} )
+            a(href='#' id='shared' class='btn btn-success') 分享 ( #{article.shared} )
+      div(class='blog-post')
+        if comments
+          h4(class='blog-post-meta font-weight-bolder' id='comments') 评论列表 (#[span.font-weight-light= comments.length])
+          each comment,index in comments
+            hr
+            .card
+              .card-body
+                h5.card-title= comment.nickname
+                h6.card-subtitle.mb-2.text-muted= comment.createTime.substr(0,10)
+                p.card-text= comment.content
+        p    
+        form(id='updateForm' method='POST' action='/comment' class='needs-validation' style='margin:10px 0 10px 0;' novalidate)
+          input(type='hidden' name='audited' value='true')
+          input(type='hidden' id='article' name='article' value=article._id)
+          div.form-row
+            h5.font-weight-bolder  发表您的评论
+            textarea(class='form-control' id='content' name='content' placeholder='请输入评论内容'  rows='6' required)
+            .invalid-feedback 请输入评论内容          
+          div.form-row
+            div(class='col-md-6 mb-3')
+              label(for='nickname') 您的昵称
+              input(type='text' class='form-control' id='nickname' name='nickname' placeholder='请输入昵称' required)
+              .invalid-feedback 请输入昵称
+          div.form-row  
+            div(class='col-md-6 mb-3')
+              label(for='email') 您的电子邮箱 (不会公开)
+              input(type='email' class='form-control' id='email' name='email' placeholder='请输入电子邮箱' required)
+              .invalid-feedback 请输入电子邮箱地址
+          div.form-row  
+            div(class='col-md-2 mb-3')              
+              button(type='submit' class='btn btn-primary btn-block') 发表
+          
+block scripts
+  include scripts.pug
+  //脚本
+  script(src='/components/marked/marked.min.js')
+  script(src='/components/highlight/highlight.pack.js')
+  script(src='/components/highlightjs-line-numbers/highlightjs-line-numbers.min.js')
+  script(src='/blog/javascripts/common.js')
+  script(src='/blog/javascripts/article.js')
+  script(src='/blog/javascripts/comment.js')
+

@@ -1,0 +1,8 @@
+.d-flex.fixed-top.justify-content-center.align-items-center(aria-live='polite', aria-atomic='true')
+  .toast.hide(id='statusEl',role='alert', aria-live='assertive', aria-atomic='true',data-delay='1000')
+    .toast-header
+      img#statusIcon.rounded.mr-2(src='/admin/images/success.png', alt='操作提示' style='width:20px;height:20px;')
+      strong#statusTitle.mr-auto 操作提示
+      //button.ml-2.mb-1.close(type='button', data-dismiss='toast', aria-label='Close')
+        span(aria-hidden='true') &times;
+    #statusMessage.toast-body 记录删除成功   

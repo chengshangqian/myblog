@@ -1,0 +1,69 @@
+extends ../layout
+block content
+  //删除操作提示
+  include ../operation-comfirm.pug
+  include ../operation-status.pug
+        
+  //顶部导航
+  include ../menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+    a(id='createBtn' href='/admin/comments/update' class='btn btn-primary' role='button' style='margin:10px 0 10px 0;') 添加评论
+    
+    -if(comments && comments.length)
+      .table-responsive
+        table.table.table-striped.table-sm
+          thead
+            tr
+              th 序号
+              th 访客昵称        
+              th Email
+              th 文章
+              th 评论内容
+              th 评论时间
+              th 来访IP
+              th 审核
+              th 操作
+          tbody
+          each comment,index in comments
+            tr
+              th #{index + 1}       
+              td= comment.nickname
+              td= comment.email
+              td
+                a(href='/article/'+comment.article._id class='btn-sm' target='_blank')= comment.article.title
+              td= comment.content
+              td= comment.createTime
+              td= comment.remoteAddress
+              td= comment.audited == true ? '审核通过' : '未审核/未通过'
+              td
+                a(href='/admin/comments/update?id='+comment._id class='btn-sm') 更新
+                a(href='#confirmModal' data-url='/api/comments/'+comment._id class='btn-sm' data-toggle='modal' data-name=comment.nickname data-id=comment._id) 删除
+      nav
+        ul.pagination.justify-content-center
+          -if(pagination.page <= 1)
+            li.page-item.disabled
+              a(class='page-link' href='#' tabindex='-1' aria-disabled='true') 上一页
+          -else
+            li.page-item
+              a(class='page-link' href='/admin/comments?limit=' + pagination.limit + '&page=' + (pagination.page - 1) + (keywds ? '&keywds=' + keywds : '' )) 上一页       
+          -if(pagination)
+            -for(var i = 1; i <= pagination.pages; i++)
+              -if(i == pagination.page)
+                li(class='page-item active' aria-current='page')
+                  a(class='page-link' href='#') #{i}
+                    span(class='sr-only') (current)
+              -else
+                li.page-item
+                  a(class='page-link' href='/admin/comments?limit=' + pagination.limit + '&page=' + i + (keywds ? '&keywds=' + keywds : '' )) #{i}
+          -if(pagination.page < pagination.pages)
+            li.page-item
+              a(class='page-link' href='/admin/comments?limit=' + pagination.limit + '&page=' + (pagination.page + 1) + (keywds ? '&keywds=' + keywds : '' )) 下一页
+          -else
+            li.page-item.disabled
+              a(class='page-link' href='#' tabindex='-1' aria-disabled='true') 下一页
+    -else
+      p 暂无数据    
+
+block script
+  include ../scripts
+  script(src='/admin/javascripts/common-index.js')

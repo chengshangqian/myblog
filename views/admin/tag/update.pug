@@ -1,0 +1,22 @@
+extends ../layout
+block content
+  include ../operation-status.pug
+    
+  include ../menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+    form(id='updateForm' method='POST' class='needs-validation' style='margin:10px 0 10px 0;' novalidate)
+     input(type='hidden' name='id' value=tag._id)
+     div.form-row
+       div(class='col-md-6 mb-3')
+         label(for='name') 标签名称
+         input(type='text' class='form-control' id='name' name='name' value=tag.name placeholder='请输入标签名称'  required)
+         .invalid-feedback 请输入标签名称
+     if(tag._id)
+       button(type='submit' class='btn btn-primary') 更新
+     else
+       button(type='submit' class='btn btn-primary') 添加
+     a(href='/admin/tags' class='btn btn-secondary' style='margin-left:10px;') 返回
+     
+block script
+  include ../scripts
+  script(src='/admin/javascripts/common-update.js')

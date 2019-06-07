@@ -1,0 +1,66 @@
+extends ../layout
+block content
+  include ../operation-status.pug
+ 
+  include ../menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+ 
+   form(id='updateForm' method='POST' class='needs-validation' style='margin:10px 0 10px 0;' novalidate)
+     input(type='hidden' name='id' value=article._id)
+     div(class='form-row')
+       div(class='col-md-3 mb-3')
+         label(for='title') 标题
+         input(type='text' class='form-control' id='title' name='title' value=article.title placeholder='请输入标题'  required)
+         .invalid-feedback 请输入标题
+       div(class='col-md-3 mb-3')
+         label(for='subtitle') 副标题
+         input(type='text' class='form-control' id='subtitle' name='subtitle' value=article.subtitle placeholder='请输入副标题' )
+         .invalid-feedback 请输入副标题   
+       div(class='col-md-3 mb-3')
+         label(for='category') 所属栏目
+         select(class='custom-select' id='category' name='category' required)
+           option(value='') 请选择栏目
+           each c in categories
+            if(article.category && c._id == article.category._id)
+              option(value=c._id selected)= c.name
+            else 
+              option(value=c._id)= c.name
+         .invalid-feedback 请选择文章所属栏目   
+       div(class='col-md-3 mb-3')
+         label(for='tags') 标签（可多选）
+         select(multiple class='selectpicker' id='tags' name='tags' data-selected-text-format='count > 3' data-none-selected-text='请选择标签'  required)
+           each tag in tags
+             if(article.tags && article.tags.indexOf(tag.name) > -1)
+               option(value=tag.name selected)= tag.name
+             else 
+               option(value=tag.name)= tag.name
+         .invalid-feedback 请选择文章标签
+     div(class='form-group')
+       label(for='summary') 摘要
+       textarea(class='form-control' id='summary' name='summary' placeholder='请输入摘要'  rows='4' required)= article.summary
+       .invalid-feedback 请输入摘要
+     div(class='form-group')
+       label(for='content') 内容(MARKDOWN语法)
+       textarea(class='form-control' id='content' name='content' placeholder='请输入内容'  rows='11'  required)= article.content
+       .invalid-feedback 请输入内容
+     div(class='form-group custom-control custom-switch')
+       if(article.published)
+         input(type='checkbox' class='custom-control-input' id='published' name='published' value='true' checked)  
+       else
+         input(type='checkbox' class='custom-control-input' id='published' name='published' value='true') 
+       label(class='custom-control-label' for='published') 保存同时发布
+     if(article._id)
+       button(type='submit' class='btn btn-primary') 更新
+     else
+       button(type='submit' class='btn btn-primary') 添加
+     if(article._id)
+       a(href='/article/'+article._id target='_blank' class='btn btn-secondary' style='margin-left:10px;') 预览
+     a(href='/admin/articles' class='btn btn-secondary' style='margin-left:10px;') 返回
+
+block script
+  include ../scripts
+  script(src='/components/marked/marked.min.js')
+  script(src='/components/bootstrap-select/js/bootstrap-select.min.js')
+  script(src='/components/bootstrap-select/js/i18n/defaults-zh_CN.min.js')
+  script(src='/admin/javascripts/common-update.js')
+  script(src='/admin/javascripts/article/update.js')

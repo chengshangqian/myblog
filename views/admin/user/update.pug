@@ -1,0 +1,71 @@
+extends ../layout
+block content
+  include ../operation-status.pug
+    
+  include ../menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+    form(id='updateForm' method='POST' class='needs-validation' enctype='multipart/form-data' style='margin:10px 0 10px 0;' novalidate)
+      input(type='hidden' id='id' name='id' value=user._id)
+      input(type='hidden' id='nativeAccount' value=user.account)
+      div(class='form-row')
+        div(class='col-md-6 mb-3')
+          label(for='userType') 用户类型
+          - var userTypes = [{name:'超级管理员',value:1},{name:'博客管理员',value:2}];
+          select(class='custom-select' id='userType' name='userType' required)
+            option(value='') 请选择用户类型
+            each ut,i in userTypes
+              if(ut.value == user.userType)
+                option(value=ut.value selected)= ut.name
+              else 
+                option(value=ut.value)= ut.name
+          .invalid-feedback 请选择用户类型
+      div.form-row
+        if(user._id)  
+          div(class='col-md-6 mb-3')
+            label(for='account') 账号
+            input(type='text' class='form-control' id='account' name='account' value=user.account placeholder='请输入账号'  required)
+            #accountInvalidFeedback.invalid-feedback 请输入账号
+        else
+          div(class='col-md-3 mb-3')
+            label(for='account') 账号
+            input(type='text' class='form-control' id='account' name='account' value=user.account placeholder='请输入账号'  required)
+            #accountInvalidFeedback.invalid-feedback 请输入账号
+          div(class='col-md-3 mb-3')
+            label(for='passwd') 密码
+            input(type='password' class='form-control' id='passwd' name='passwd' value=user.passwd placeholder='请输入密码'  required)
+            .invalid-feedback 请输入密码
+      div.form-row
+        div(class='col-md-3 mb-3')
+          label(for='nickname') 昵称
+          input(type='text' class='form-control' id='nickname' name='nickname' value=user.nickname placeholder='请输入昵称'  required)
+          .invalid-feedback 请输入昵称
+        div(class='col-md-3 mb-3')
+          label(for='realname') 真实姓名
+          input(type='text' class='form-control' id='realname' name='realname' value=user.realname placeholder='请输入真实姓名' )
+          .invalid-feedback 请输入真实姓名          
+      div.form-row
+        div(class='col-md-3 mb-3')
+          label(for='mobile') 手机号
+          input(type='mobile' class='form-control' id='mobile' name='mobile' value=user.mobile placeholder='请输入手机号' )
+          .invalid-feedback 请输入正确的手机号码
+        div(class='col-md-3 mb-3')
+          label(for='email') 邮箱
+          input(type='email' class='form-control' id='email' name='email' value=user.email placeholder='请输入邮箱' )
+          .invalid-feedback 请输入正确的邮箱地址
+      div(class='custom-file')
+        div(class='col-md-6 mb-3')
+          input(type='file' class='custom-file-input' id='photo' name='photo')
+          label(for='photo' class='custom-file-label' data-browse='选择') 选择照片
+          small 支持.png .jpeg .jpg文件格式
+      div.form-row(style='margin-top:10px;')
+        if(user._id)
+          button(type='submit' class='btn btn-primary') 更新
+        else
+          button(type='submit' class='btn btn-primary') 添加
+        a(href='/admin/users' class='btn btn-secondary' style='margin-left:10px;') 返回
+     
+block script
+  include ../scripts
+  script(src='/components/bsCustomFileInput/bs-custom-file-input.min.js') 
+  script(src='/admin/javascripts/common-update.js') 
+  script(src='/admin/javascripts/user/update.js')

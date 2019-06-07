@@ -1,0 +1,11 @@
+div(class='modal fade' id='confirmModal' tabindex='-1' role='dialog' aria-labelledby='modelTitle' aria-hidden='true')
+    div(class='modal-dialog modal-dialog-centered' role='document')
+      div.modal-content
+        div.modal-header
+          h5(class='modal-title' id='modelTitle') 删除记录
+          button(type='button' class='close' data-dismiss='modal' aria-label='关闭')
+            span(aria-hidden='true') &times;
+        div#modelMessage.modal-body 确定删除该记录吗？
+        div.modal-footer
+          button(type='button' class='btn btn-secondary' data-dismiss='modal') 取消
+          button(id='confirmBtn' type='button' class='btn btn-primary') 确定   

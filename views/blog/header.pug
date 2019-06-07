@@ -1,0 +1,31 @@
+header(class='blog-header py-3')
+  div(class='row')
+    div(class='d-flex flex-column col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6')
+      a(class='blog-header-logo text-dark blog-title' href='/') 成序员博客    
+      a(class='text-muted blog-description') 人生除了程序，还有诗和远方
+    div(class='d-flex col-6 justify-content-end align-items-center')
+      input.form-control.form-control-light.w-100(type='text',id='searchKeywords' placeholder='输入关键字+回车（Enter）', aria-label='搜索')
+      a(class='text-muted' id='searchBtn' href='/search')
+        svg(xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' class='mx-3' role='img' viewBox='0 0 24 24' focusable='false')
+          title 查找文章
+          circle(cx='10.5' cy='10.5' r='7.5')
+          path(d='M21 21l-5.2-5.2')
+      //a(class='btn btn-sm btn-outline-success' href='/admin' target='_blank') 管理
+      form(method='GET' style='display:none;' id='searchForm')
+        input(type='hidden' id='keywds' name='keywds' value='')
+
+//导航      
+ul(class='nav nav-fill nav-dark bg-dark justify-conten-around blog-nav')
+  li.nav-item
+    if (navi === 'index')
+      a(class='nav-link text-light bg-success' href='/') 首页
+    else 
+      a(class='nav-link text-light font-weight-lighter' href='/') 首页
+    if(categories)
+      each category in categories
+        if (navi === category._id)
+          li.nav-item
+            a(class='nav-link text-light bg-success' href='/list/' + category._id)= category.name
+        else
+          li.nav-item
+            a(class='nav-link text-light font-weight-lighter' href='/list/' + category._id)= category.name      

@@ -1,0 +1,21 @@
+extends login-layout
+block content
+  div.text-center
+    form(id='updateForm' method='POST' class='form-signin needs-validation' novalidate)
+     img(class='mb-4' src='/admin/images/blog-logo.svg' width='72' height='72')
+     h1(class='h3 mb-3 font-weight-normal') 请登录
+     div.form-group     
+      label(for='inputEmail' class='sr-only') 账号
+      input(type='text' id='inputEmail' name='account' value='admin' class='form-control' placeholder='请输入账号' required autofocus)
+      .invalid-feedback 请输入登录帐号
+     div.form-group
+      label(for='inputPassword' class='sr-only') 密码
+      input(type='password' name='passwd' id='inputPassword' value='password' class='form-control' placeholder='请输入密码' required)
+      .invalid-feedback 请输入登录密码
+     div.checkbox.mb-3
+      label
+       input(type='checkbox' value='remember-me')
+       span 记住账号
+     button(class='btn btn-lg btn-primary btn-block' type='submit') 登录
+     include login-footer
+     script(src='/admin/javascripts/login.js')

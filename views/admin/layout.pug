@@ -1,0 +1,30 @@
+doctype html
+html(lang='zh-CN')
+ head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width initial-scale=1 shrink-to-fit=no') 
+  meta(name='description' content='成序员博客 JAVA PYTHON JS NODE HTML5 CSS3')
+  meta(name='author' content='成尚谦(chengshangqian@foxmail.com)')
+  title 成序员博客
+  link(rel='stylesheet' href='/components/bootstrap/css/bootstrap.min.css')
+  link(rel='stylesheet' href='/components/bootstrap-select/css/bootstrap-select.min.css')
+  link(rel='stylesheet' href='/components/jquery-ui/jquery-ui.min.css')
+  link(rel='stylesheet' href='/admin/stylesheets/style.css')
+ body
+  nav.navbar.navbar-dark.fixed-top.bg-dark.flex-md-nowrap.p-0.shadow
+    a.navbar-brand.col-sm-3.col-md-2.mr-0(href='/' target='_blank') #[img.rounded-circle(src=session.sessionUser.photo style='height:25px;width:25px;' title=session.sessionUser.account)] 成序员博客
+    input.form-control.form-control-light.w-100(type='text',id='searchKeywords' placeholder='请输入关键字+按回车（Enter）', aria-label='搜索')
+    input.btn.btn-outline-success(id='searchBtn' type='button' value='搜索' style='margin-left:10px;')
+    ul.navbar-nav.px-3
+      li.nav-item.text-nowrap
+        a.nav-link(href='/admin/logout') 退  出
+  .container-fluid
+    .row           
+      block content
+      block footer
+  form(method='GET' style='display:none;' id='searchForm')
+    -if(pagination)
+      input(type='hidden' name='limit' value=pagination.limit)
+      input(type='hidden' name='page' value='1')
+      input(type='hidden' id='keywds' name='keywds' value='')
+  block script

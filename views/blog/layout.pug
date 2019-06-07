@@ -1,0 +1,27 @@
+doctype html
+html(lang='zh-CN')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width initial-scale=1 shrink-to-fit=no') 
+    meta(name='description' content='成序员博客 JAVA PYTHON JS NODE HTML5 CSS3')
+    meta(name='author' content='成尚谦(chengshangqian@foxmail.com)')
+    title 成序员博客
+    include styles.pug
+  body
+    div.container
+      //头部与导航
+      include header.pug
+        
+    //博客主体 
+    main(role='main' class='container')
+      div.row      
+        block content 
+    
+        //侧边栏
+        include about.pug
+   
+    //底部版权     
+    include footer.pug
+  
+    //公共脚本  
+    block scripts

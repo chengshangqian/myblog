@@ -1,0 +1,29 @@
+extends ../layout
+block content
+  include ../operation-status.pug
+    
+  include ../menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+    form(id='updateForm' method='POST' class='needs-validation' style='margin:10px 0 10px 0;' novalidate)
+     input(type='hidden' name='id' value=word._id)
+     div(class='form-row')
+       div(class='col-md-6 mb-3')
+         label(for='name') 敏感词
+         input(type='text' class='form-control' id='name' name='name' value=word.name placeholder='请输入敏感词名称'  required)
+         .invalid-feedback 请输入敏感词名称
+     div(class='form-row custom-control custom-switch')
+       div(class='col-md-6 mb-3')
+         if(word.enabled)
+           input(type='checkbox' class='custom-control-input' id='enabled' name='enabled' value='true' checked)  
+         else
+           input(type='checkbox' class='custom-control-input' id='enabled' name='enabled' value='true') 
+         label(class='custom-control-label' for='enabled') 启用       
+     if(word._id)
+       button(type='submit' class='btn btn-primary') 更新
+     else
+       button(type='submit' class='btn btn-primary') 添加
+     a(href='/admin/words' class='btn btn-secondary' style='margin-left:10px;') 返回
+     
+block script
+  include ../scripts
+  script(src='/admin/javascripts/common-update.js')

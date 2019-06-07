@@ -1,0 +1,32 @@
+extends layout
+block content
+  //顶部导航
+  include menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+      h1.h2 博客看板
+      .btn-toolbar.mb-2.mb-md-0
+        .btn-group.mr-2
+          button.btn.btn-sm.btn-outline-secondary(type='button') 分享
+          button.btn.btn-sm.btn-outline-secondary(type='button') 导出
+        button.btn.btn-sm.btn-outline-secondary.dropdown-toggle(type='button')
+          span(data-feather='calendar')
+          |             本周
+    p 访客看板
+    div#visitor-position(style='height:400px;')
+    p 栏目看板
+    div.row
+      div#category-behavior.col-md-6(style='height:250px;')
+      div#category-read.col-md-6(style='height:250px;')
+    p 文章看板
+    div.row
+      div#article-behavior.col-md-6(style='height:250px;')
+      div#article-read.col-md-6(style='height:250px;')
+
+block script
+  include scripts  
+  //script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js')
+  script(src='/components/echarts/echarts.js')
+  script(src='/components/echarts/theme/vintage.js')
+  script(src='/components/echarts/map/js/china.js')
+  script(src='/admin/javascripts/index.js')

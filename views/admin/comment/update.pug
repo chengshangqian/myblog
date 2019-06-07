@@ -1,0 +1,48 @@
+extends ../layout
+block content
+  include ../operation-status.pug
+    
+  include ../menu
+  main.col-md-9.ml-sm-auto.col-lg-10.px-4(role='main')
+    form(id='updateForm' method='POST' class='needs-validation' style='margin:10px 0 10px 0;' novalidate)
+      input(type='hidden' name='id' value=comment._id)
+      input(type='hidden' id='article' name='article' value= comment.article ? comment.article._id : '')
+      div.form-row
+        div(class='col-md-6 mb-3')
+          label(for='nickname') 昵称
+          input(type='text' class='form-control' id='nickname' name='nickname' value=comment.nickname placeholder='请输入昵称' required)
+          .invalid-feedback 请输入昵称
+      div.form-row  
+        div(class='col-md-6 mb-3')
+          label(for='email') EMAIL
+          input(type='email' class='form-control' id='email' name='email' value=comment.email placeholder='请输入EMAIL' required)
+          .invalid-feedback 请输入EMAIL地址
+      div.form-row
+        div(class='col-md-6 mb-3')
+          label(for='articleEl') 关联文章
+          input(type='text' id='articleEl' class='form-control' name='articleName' aria-describedby='articleElHelp' placeholder='输入文章关键字查询'  required)
+          <small id='articleElHelp' class='form-text text-info'>输入文章关键字，如标题，摘要，文章内容包含文字等</small>
+          .invalid-feedback 请选择查询到的文章         
+      div(class='form-row')
+        div(class='col-md-6 mb-3')
+          label(for='content') 评论
+          textarea(class='form-control' id='content' name='content' placeholder='请输入评论的内容'  rows='6' required)= comment.content
+          .invalid-feedback 请输入评论
+      div(class='form-row custom-control custom-switch')
+        div(class='col-md-6 mb-3')
+          if(comment.audited)
+            input(type='checkbox' class='custom-control-input' id='audited' name='audited' value='true' checked)  
+          else
+            input(type='checkbox' class='custom-control-input' id='audited' name='audited' value='true') 
+          label(class='custom-control-label' for='audited') 审核通过          
+      if(comment._id)
+        button(type='submit' class='btn btn-primary') 更新
+      else
+        button(type='submit' class='btn btn-primary') 添加
+      a(href='/admin/comments' class='btn btn-secondary' style='margin-left:10px;') 返回
+
+block script
+  include ../scripts
+  script(src='/components/jquery-ui/jquery-ui.js')
+  script(src='/admin/javascripts/common-update.js')
+  script(src='/admin/javascripts/comment/update.js')
